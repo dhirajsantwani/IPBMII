@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator & Wellness Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="server.js">
+</head>
+<body background="./bg.avif">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+    /* background-image: ; */
+    color: rgb(255, 255, 255);
+    padding: 15px 20px;
+}
+
+nav ul {
+    list-style-type:none;
+    background-color: bisque;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 15px;
+    color: aliceblue;
+}
+
+.hero {
+    text-align: center;
+    padding: 50px;
+    background-image: url('health-background.jpg');
+    background-size: cover;
+    color: white;
+}
+
+.bmi-calculator, .wellness-tracker {
+    padding: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+}
+h2 {
+    background-color: rgb(255, 221, 177);
+    color: #000;
+}
+body {
+  background-repeat:initialxz;
+}
+    </style>
+    <header background="./images.">
+        <h1>BMI Calculator & Wellness Tracker</h1>
+        <nav>
+            <ul>
+                <li><a href="./ip1.html">Home </a></li>
+                <li><a href="./about.html">About</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h2>Your journey to a Being healthier starts here!</h2>
+    </section>
+
+    <section class="bmi-calculator">
+        <h2>BMI Calculator</h2>
+        <form id="bmi-form">
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height" required>
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" required>
+            <button type="submit">Calculate BMI</button>
+        </form>
+        <div class="result"></div>
+        
+        <div class="result"></div>
+    </section>
+
+    <section class="wellness-tracker">
+        <h2>Track Your Wellness Journey</h2>
+        <form id="wellness-form">
+            <label for="steps">Daily Steps:</label>
+            <input type="number" id="steps">
+            <label for="water">Water Intake (liters):</label>
+            <input type="number" id="water">
+            <label for="sleep">Sleep Hours:</label>
+            <input type="number" id="sleep">
+            <label for="mood">Mood:</label>
+            <select id="mood">
+                <option>Happy</option>
+                <option>Neutral</option>
+                <option>Sad</option>
+            </select>
+            <button type="submit">Log My Day</button>
+        </form>        
+        <div class="chart"></div>
+    </section>
+
+    <footer>
+        <p>About Us | Privacy Policy | Terms of Service</p>
+        <p>Project by Dhiraj Santwani</p>
+    </footer>
+    <script>
+        document.getElementById('bmi-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const height = document.getElementById('height').value;
+            const weight = document.getElementById('weight').value;
+        
+            const response = await fetch('http://localhost:3000/calculate-bmi', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ height, weight })
+            });
+        
+            const data = await response.json();
+            document.querySelector('.result').innerHTML = `Your BMI is ${data.bmi} (${data.category})`;
+        });
+        
+        document.getElementById('wellness-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+        
+            const steps = document.getElementById('steps').value;
+            const water = document.getElementById('water').value;
+            const sleep = document.getElementById('sleep').value;
+            const mood = document.getElementById('mood').value;
+        
+            const response = await fetch('http://localhost:3000/log-wellness', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ steps, water, sleep, mood })
+            });
+        
+            const data = await response.json();
+            console.log('Wellness data logged:', data);
+        });
+        </script>
+        
+</body>
+</html>

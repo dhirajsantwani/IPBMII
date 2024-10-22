@@ -1,0 +1,14 @@
+{
+    "name": "bmi-wellness-tracker",
+    "version": "1.0.0",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+      "express": "^x.x.x",
+      "body-parser": "^x.x.x",
+      "cors": "^x.x.x"
+    }
+  }
+  
